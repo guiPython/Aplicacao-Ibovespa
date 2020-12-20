@@ -8,10 +8,12 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+        unique: true,
       },
       nome: {
         allowNull: false,
         type: Sequelize.STRING,
+        unique: true,
       },
       empresa: {
         allowNull: false,
@@ -24,6 +26,10 @@ module.exports = {
       subsetor: {
         allowNull: false,
         type: Sequelize.STRING,
+      },
+      preco: {
+        allowNull: false,
+        type: Sequelize.FLOAT,
       },
       max: {
         allowNull: false,
@@ -40,6 +46,14 @@ module.exports = {
       close: {
         allowNull: false,
         type: Sequelize.FLOAT,
+      },
+      timeSeries: {
+        allowNull: false,
+        type: Sequelize.JSON,
+      },
+      dateJson: {
+        allowNull: false,
+        type: Sequelize.DATE,
       },
       createdAt: {
         allowNull: false,

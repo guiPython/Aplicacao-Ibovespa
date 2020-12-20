@@ -65,7 +65,7 @@ const resolvers = {
             return { status: "Inativo "}
         },
 
-        updateUsuario: async (_,{email,newSenha}) => {
+        updatePassword: async (_,{email,newSenha}) => {
             const usuario  = new UsuarioController(" ",email,newSenha)
             const dados = await usuario.getUsuario()
             if (email != dados.email){
@@ -74,6 +74,18 @@ const resolvers = {
             await usuario.updateUsuario()
             const keyAPi = createToken(dados.id);
             return {keyAPi , status}
+        },
+
+        updateSaldo: async(_,{ valor },{validate}) => {
+            const { id } = validate()
+            const usuario = new UsuarioController(id)
+            try{
+                await usuario.updateSaldo(valor)
+                return { mensagem: "Saldo atualizado com Sucesso "}
+            }
+            catch{
+                throw new Error("Falha ao atualizar o saldo")
+            }
         }
     }
 

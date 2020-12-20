@@ -13,7 +13,8 @@ module.exports = gql`
     type Mutation {
         signUp( email: String! , senha: String! , nome: String! , keyAlphaVantage: String! ): Usuario
         deleteUsuario( email: String! , senha: String! ): Usuario
-        updateUsuario( email: String! , newSenha: String! ): Usuario
+        updatePassword( email: String! , newSenha: String! ): Usuario
+        updateSaldo( valor: Float! ): Mensagem
     }
 
 `

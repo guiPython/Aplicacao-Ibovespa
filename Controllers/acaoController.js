@@ -4,9 +4,10 @@
 
    class AcaoController {
 
-      constructor( _nomeAcao , keyAlphaVantage ){
+      constructor( _nomeAcao , keyAlphaVantage , _idAcao ){
          this._nomeAcao = _nomeAcao
          this.keyAlphaVantage = keyAlphaVantage
+         this._idAcao = _idAcao
       }
 
       async deleteAcao(){
@@ -45,7 +46,17 @@
          }
       }
 
-      async getAcao(){
+      async getAcaoByPk(){
+         try{
+            return await AcaoDataBase.findByPk(this._idAcao)
+         }
+         catch(e){
+            console.log(e)
+            return "NOT FOUND"
+         }
+      }
+
+      async getAcaoByName(){
          try{
             return await AcaoDataBase.findOne( {where:{nome: this._nomeAcao} } )
          }

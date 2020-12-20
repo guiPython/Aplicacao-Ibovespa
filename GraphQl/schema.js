@@ -6,11 +6,16 @@ const AcaoResolver = require('./Resolvers/acaoResolver')
 const UsuarioType = require('./Schemas/usuarioSchema')
 const UsuarioResolver = require('./Resolvers/usuarioResolver')
 
-const CompraType = require('./Schemas/compraSchema')
-const CompraResolver = require('./Resolvers/compraResolver')
+const OperacaoType = require('./Schemas/operacaoSchema')
+const OperacaoResolver = require('./Resolvers/operacaoResolver')
 
-const typeDefs = mergeTypeDefs([AcaoType,UsuarioType,CompraType,])
-const resolvers = mergeResolvers([AcaoResolver,UsuarioResolver,CompraResolver,])
+const CarteiraType = require('./Schemas/carteiraSchema')
+const CarteiraResolver = require('./Resolvers/carteiraResolver')
+
+const MensagemType = require('./Schemas/mensagemSchema')
+
+const typeDefs = mergeTypeDefs([AcaoType,UsuarioType,CarteiraType,OperacaoType,MensagemType])
+const resolvers = mergeResolvers([AcaoResolver,UsuarioResolver,OperacaoResolver,CarteiraResolver])
 
 
 const schema = makeExecutableSchema({typeDefs , resolvers})

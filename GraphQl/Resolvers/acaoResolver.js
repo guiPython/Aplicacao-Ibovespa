@@ -1,7 +1,5 @@
 const AcaoController = require('../../Controllers/acaoController')
 const { GraphQLJSON, GraphQLJSONObject } = require('graphql-type-json');
-const UsuarioController = require('../../Controllers/usuarioController')
-// TODO autenticar querys , mutations
 // TODO sleep nos requests do resolver acoes
 
 const resolvers = {
@@ -20,7 +18,6 @@ const resolvers = {
 
             var info = await acao.getAcoes()
             var nomeAcoes = info.map(i => i.nome)
-            console.log(nomeAcoes)
 
             async function loop(nomeAcoes) {
                 for (let i = 0; i < nomeAcoes.length ; i++) {

@@ -37,7 +37,7 @@ class UsuarioController {
         }
     }
 
-    async updateUsuario(){
+    async changePassword(){
 
         try{
             const senha = await bcrypt.hash(this._senha,10)
@@ -45,6 +45,17 @@ class UsuarioController {
         }
         catch{
             throw new Error('O email inserido nao foi registrado')
+        }
+    }
+
+    async updateSaldo(valor){
+        try{
+            const usuario = await UsuarioDataBase.findByPk(this.id)
+            const total = valor + usuario.saldo
+            await UsuarioDataBase.update({saldo: total },{where:{id:this.id}})
+        }
+        catch{
+            throw new Error("Falha ao atualizar Saldo");
         }
     }
 

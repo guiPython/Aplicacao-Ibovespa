@@ -7,7 +7,8 @@ class Usuario  extends Model {
             nome: DataTypes.STRING,
             email: DataTypes.STRING,
             senha: DataTypes.STRING,
-            keyAlphaVantage: DataTypes.STRING
+            keyAlphaVantage: DataTypes.STRING,
+            saldo: DataTypes.FLOAT,
         },
             {
             sequelize,
@@ -16,8 +17,8 @@ class Usuario  extends Model {
     }
 
     static associate(models){
-        this.hasMany(models.Compra,{ foreignKey:"id" })
-        this.hasMany(models.Venda, { foreignKey:"id" })
+        this.hasMany(models.Carteira,{ foreignKey:"id" })
+        this.hasMany(models.Operacao,{foreignKey:"id"})
     }
 }
 

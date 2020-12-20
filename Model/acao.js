@@ -23,8 +23,8 @@ class Acao extends Model{
     }
 
     static associate(models){
-        this.hasMany(models.Venda,{foreignKey:"idAcao"})
-        this.hasMany(models.Compra,{foreignKey:"idAcao"})
+        this.hasMany(models.Carteira,{foreignKey:"idAcao"})
+        this.hasMany(models.Operacao,{foreignKey:"idAcao"})
     }
 }
 
