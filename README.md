@@ -1,8 +1,9 @@
 # Api_IBovespa
 
-Api construida com Apollo-Server , GraphQL , Sequelize e JsonWebToken . Ela persiste dados de uma carteira de determinado usuario, permite consultas para usuarios cadastrados e com tokens validos.
+Api construida com Apollo-Server , GraphQL , Sequelize e JsonWebToken . A aplicacao pode ser utilizada para consulta de acoes.
 
 Toda a parte Web de obtencao de dados utiliza os seguintes dominios/ApI:
+
 https://statusinvest.com.br/
 https://query1.finance.yahoo.com/v8/finance/chart/none.SA?region=US&lang=en-US&includePrePost=false&interval=2m&range=1d&corsDomain=finance.yahoo.com&.tsrc=finance
 https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=@none.SAO&apikey=@keyAlpha
