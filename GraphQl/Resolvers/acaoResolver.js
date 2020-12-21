@@ -8,22 +8,31 @@ const resolvers = {
 
             const { keyAlphaVantage } = validate()
             const acao = new AcaoController(nome,keyAlphaVantage) ; 
-            await acao.updateAcao()
-            return await acao.getAcao() 
+            if ( await acao.getAcaoByName() == null ){
+                await acao.insertAcao()
+            }
+            else {
+                await acao.updateAcao()
+            }
+            return await acao.getAcaoByName() 
         },
 
-        acoes: async (_,__,{validate}) => { 
-            const { keyAlphaVantage } = validate()
-            var acao = new AcaoController( null ,keyAlphaVantage) 
+        acoes: async (_,{ nomes },{validate}) => { 
 
-            var info = await acao.getAcoes()
-            var nomeAcoes = info.map(i => i.nome)
+            const nomeAcoes = nomes.split(",")
+            const { keyAlphaVantage } = validate()
+            var acao = new AcaoController( null ,keyAlphaVantage)
 
             async function loop(nomeAcoes) {
                 for (let i = 0; i < nomeAcoes.length ; i++) {
                     await new Promise(resolve => setTimeout(resolve, 10000));
                     acao = new AcaoController(nomeAcoes[i],keyAlphaVantage)
-                    await acao.updateAcao()
+                    if ( await acao.getAcaoByName() == null ){
+                        await acao.insertAcao()
+                    }
+                    else{
+                        await acao.updateAcao()
+                    }
                 }
             }
 
@@ -31,21 +40,6 @@ const resolvers = {
 
         },
 
-    },
-    Mutation:{
-        createAcao: async (_ , { nome } ,{validate}) => {
-            const { keyAlphaVantage } = validate()
-            const query = new AcaoController(nome , keyAlphaVantage)
-                if( await query.insertAcao() ) {
-                    return await query.getAcao();
-            }
-        },
-
-        deleteAcao: async (_ , {nome} , {validate} ) => {
-            validate()
-            const query = new AcaoController(nome)
-            await query.deleteAcao()
-        }
     },
     JSON:GraphQLJSON,
     JSONObject:GraphQLJSONObject,

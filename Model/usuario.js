@@ -8,17 +8,11 @@ class Usuario  extends Model {
             email: DataTypes.STRING,
             senha: DataTypes.STRING,
             keyAlphaVantage: DataTypes.STRING,
-            saldo: DataTypes.FLOAT,
         },
             {
             sequelize,
             tableName: "Usuarios",
         })
-    }
-
-    static associate(models){
-        this.hasMany(models.Carteira,{ foreignKey:"id" })
-        this.hasMany(models.Operacao,{foreignKey:"id"})
     }
 }
 
