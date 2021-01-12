@@ -23,7 +23,7 @@ module.exports = gql`
     }
     type Query {
         acao( nome: String! ): Acao
-        acoes (nomes: String! ): [Acao]
+        acoes: [Acao]
     }
     type Mutation {
         createAcao(nome: String!): Acao

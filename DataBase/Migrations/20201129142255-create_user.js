@@ -22,6 +22,11 @@ module.exports = {
         allowNull: false,
         type: Sequelize.STRING
       },
+      saldo: {
+        allowNull: false,
+        type: Sequelize.FLOAT,
+        defaultValue: 0.00,
+      },
       keyAlphaVantage: {
         allowNull: false,
         type: Sequelize.STRING

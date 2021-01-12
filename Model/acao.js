@@ -21,6 +21,11 @@ class Acao extends Model{
             tableName: "Acoes",
         })
     }
+
+    static associate(models){
+        this.hasMany(models.Carteira,{foreignKey:"idAcao"})
+        this.hasMany(models.Operacao,{foreignKey:"idAcao"})
+    }
 }
 
 module.exports = Acao

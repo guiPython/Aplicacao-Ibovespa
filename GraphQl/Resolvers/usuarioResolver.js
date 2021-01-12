@@ -23,7 +23,7 @@ const resolvers = {
 
             const keyAPi = createToken(dados.id,dados.keyAlphaVantage)
 
-            return { keyAPi , status }
+            return { keyAPi , status  , nome: dados.nome , saldo: dados.saldo}
         }
     },
 
@@ -38,7 +38,7 @@ const resolvers = {
             await usuario.insertUsuario()
             dados = await usuario.getUsuario()
             const keyAPi = createToken( dados.id , dados.keyAlphaVantage )
-            return { keyAPi , status }
+            return { keyAPi , status , }
             
 
         },

@@ -4,6 +4,8 @@ module.exports = gql`
     type Usuario {
         keyAPi: String
         status: String
+        saldo: Float
+        nome: String
     }
 
     type Query {
