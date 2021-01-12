@@ -1,4 +1,4 @@
-# Api_IBovespa
+# Api_IBovespa Complete
 
 Api construida com Apollo-Server , GraphQL , Sequelize e JsonWebToken . A aplicacao pode ser utilizada para consulta de acoes.
 
