@@ -7,6 +7,7 @@ class Carteira extends Model{
             {
                 qtd: DataTypes.INTEGER,
                 valorMedio: DataTypes.FLOAT,
+                historico: DataTypes.JSON
             },
 
             {

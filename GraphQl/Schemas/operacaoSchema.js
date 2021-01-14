@@ -20,8 +20,8 @@ module.exports = gql`
     }
 
     type Mutation {
-        addVenda ( nomeAcao: String! , qtd: Int! , valor: Float!) : Mensagem
-        addCompra ( nomeAcao: String! , qtd: Int! , valor: Float! , saldo: Boolean!) : Mensagem
+        addVenda ( nomeAcao: String! , qtd: Int! , valor: Float! , data: String!) : Mensagem
+        addCompra ( nomeAcao: String! , qtd: Int! , valor: Float! , saldo: Boolean! , data: String!) : Mensagem
     }
 
 `

@@ -8,6 +8,7 @@ class Operacao extends Model {
             tipo: DataTypes.STRING,
             qtd:  DataTypes.INTEGER,
             valor: DataTypes.FLOAT,
+            data: DataTypes.DATE
         },
 
         {

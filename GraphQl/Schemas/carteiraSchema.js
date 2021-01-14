@@ -15,6 +15,7 @@ module.exports = gql `
         open: Float,
         close: Float,
         updatedAt: String,
+        historico: JSON,
     }
 
     type Query {

@@ -1,6 +1,5 @@
 const CarteiraController = require("../../Controllers/carteiraController")
 const AcaoController = require("../../Controllers/acaoController")
-const UsuarioController = require("../../Controllers/usuarioController")
 
 const resolver = {
 
@@ -8,13 +7,14 @@ const resolver = {
         Carteira: async (_,__,{validate}) => {
             const { id } = validate()
 
-            var usuario = await new UsuarioController(id).getUsuario()
-            var registros = await new CarteiraController(id).getCarteira()
+            const carteira = new CarteiraController(id)
+            var registros = await carteira.getCarteira()
 
             registros = registros.map(i => new Object({
                 idAcao: i.idAcao,
                 qtd: i.qtd,
                 valorMedio: i.valorMedio,
+                historico: i.historico,
                 updatedAt: i.updatedAt
             }))
 
@@ -30,6 +30,7 @@ const resolver = {
                         subsetor: acao.subsetor,
                         valorMedio: registros[i].valorMedio,
                         preco: acao.preco,
+                        historico: registros[i].historico,
                         min: acao.min,
                         max: acao.max,
                         open: acao.open,

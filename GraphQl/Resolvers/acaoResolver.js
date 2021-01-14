@@ -1,6 +1,5 @@
 const AcaoController = require('../../Controllers/acaoController')
 const { GraphQLJSON, GraphQLJSONObject } = require('graphql-type-json');
-// TODO sleep nos requests do resolver acoes
 
 const resolvers = {
     Query:{

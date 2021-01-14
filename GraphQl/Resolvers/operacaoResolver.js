@@ -77,17 +77,36 @@ const resolver = {
     },
 
     Mutation:{
-        addVenda: async (_, { nomeAcao , qtd , valor } , {validate}) => {
+        addVenda: async (_, { nomeAcao , qtd , valor , data } , {validate}) => {
             const { id } = validate()
             const acao = await new AcaoController(nomeAcao).getAcaoByName()
-            const venda = new OperacaoController(id,acao.id,qtd,valor,"vendas")
+            const venda = new OperacaoController(id,acao.id,qtd,valor,"vendas",data)
             const registro = new CarteiraController(id,acao.id,qtd,valor,"venda")
             const usuario = new UsuarioController(id)
             const item = await registro.getItem()
             var valorMedio = item.valorMedio
-            console.log(valorMedio)
+            
+            var total = 0
 
-            if(item != null){
+            if ( valorMedio > valor) total = ( valorMedio  )
+            else if (valorMedio == valor) total = valorMedio
+
+            if ( item != null){
+                let newItem = new CarteiraController(id,acao.id,qtd,valor,"venda",item)
+                try{
+                    await venda.addOpercao()
+                    await usuario.updateSaldo(total*qtd)
+                    let historico = await venda.updateHistoricoItem()
+                    await newItem.updateItem(historico)
+                    return { mensagem: "Venda efetuada com Sucesso"}
+                }
+                catch{
+                    throw new Error("Venda nao efetuada")
+                }
+            }
+        },
+
+            /*if(item != null){
                 if(item.qtd == qtd){
                     try{
                         await venda.addOpercao()
@@ -119,17 +138,21 @@ const resolver = {
                 return {mensagem : "Venda nao efetuada"}
             }
             
-        },
+        },*/
 
-        addCompra: async (_, { nomeAcao , qtd , valor , saldo } , {validate}) => {
+        addCompra: async (_, { nomeAcao , qtd , valor , saldo , data } , {validate}) => {
             const { id , keyAlphaVantage } = validate()
+
+            if ( data > Date.now()) throw new Error("Data de compra invalida")
+
             const registro_acao = new AcaoController(nomeAcao,keyAlphaVantage)
             var acao = await registro_acao.getAcaoByName()
             if ( acao == null ){
                 await registro_acao.insertAcao()
             }
+            await registro_acao.updateAcao()
             acao = await registro_acao.getAcaoByName()
-            const compra = new OperacaoController(id,acao.id,qtd,valor,"compras")
+            const compra = new OperacaoController(id,acao.id,qtd,valor,"compras",data)
             const registro_carteira = new CarteiraController(id,acao.id,qtd,valor,"compra")
             const usuario = new UsuarioController(id)
             const itemCarteira = await registro_carteira.getItem()
@@ -145,7 +168,8 @@ const resolver = {
                         await usuario.updateSaldo(-(valor * qtd))
                     }
                 }
-                await newItem.updateItem()
+                let historico = await compra.updateHistoricoItem()
+                await newItem.updateItem(historico)
                 await compra.addOpercao()
             }
             else{
@@ -155,7 +179,7 @@ const resolver = {
                     }
                     await usuario.updateSaldo(-(valor * qtd))
                 }
-                await registro_carteira.insertItem()
+                await registro_carteira.insertItem(data)
                 await compra.addOpercao()
             }
             
