@@ -2,49 +2,53 @@ const AcaoController = require('../../Controllers/acaoController')
 const { GraphQLJSON, GraphQLJSONObject } = require('graphql-type-json');
 
 const resolvers = {
-    Query:{
+    Mutation:{
         acao: async (_, {nome} , { validate } ) => {
 
             const { keyAlphaVantage } = validate()
-            const acao = new AcaoController(nome,keyAlphaVantage) ; 
-            await acao.updateAcao()
-            return await acao.getAcao() 
+            const acao = new AcaoController(nome,keyAlphaVantage) ;
+            if ( await acao.getAcaoByName() ){
+                await acao.updateAcao()
+            }
+            else{
+                await acao.insertAcao()
+            }
+            return await acao.getAcaoByName() 
         },
 
-        acoes: async (_,__,{validate}) => { 
+        acoes: async (_,{nomes},{validate}) => { 
             const { keyAlphaVantage } = validate()
-            var acao = new AcaoController( null ,keyAlphaVantage) 
+            var acao = new AcaoController( null ,keyAlphaVantage)
 
-            var info = await acao.getAcoes()
-            var nomeAcoes = info.map(i => i.nome)
-
-            async function loop(nomeAcoes) {
+            async function loop(nomeAcoes,listaAcoes) {
+                var listaAcoes = []
                 for (let i = 0; i < nomeAcoes.length ; i++) {
-                    await new Promise(resolve => setTimeout(resolve, 10000));
+                    await new Promise(resolve => setTimeout(resolve, 2000));
                     acao = new AcaoController(nomeAcoes[i],keyAlphaVantage)
-                    await acao.updateAcao()
+                    if ( await acao.getAcaoByName() ){
+                        await acao.updateAcao()
+                    }
+                    else{
+                        await acao.insertAcao()
+                    }
+                    listaAcoes.push(acao.getAcaoByName())
                 }
+                return listaAcoes
             }
 
-            return await loop(nomeAcoes).then( async () => { return await acao.getAcoes() })
+            if ( nomes == null ){
+                let info = await acao.getAcoes()
+                let nomeAcoes = info.map(i => i.nome)
+                return await loop(nomeAcoes)
+            }
+
+            else{
+                let nomeAcoes = nomes.split(",")
+                return await loop(nomeAcoes)
+            }
 
         },
 
-    },
-    Mutation:{
-        createAcao: async (_ , { nome } ,{validate}) => {
-            const { keyAlphaVantage } = validate()
-            const query = new AcaoController(nome , keyAlphaVantage)
-                if( await query.insertAcao() ) {
-                    return await query.getAcao();
-            }
-        },
-
-        deleteAcao: async (_ , {nome} , {validate} ) => {
-            validate()
-            const query = new AcaoController(nome)
-            await query.deleteAcao()
-        }
     },
     JSON:GraphQLJSON,
     JSONObject:GraphQLJSONObject,

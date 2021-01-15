@@ -106,39 +106,6 @@ const resolver = {
             }
         },
 
-            /*if(item != null){
-                if(item.qtd == qtd){
-                    try{
-                        await venda.addOpercao()
-                        await usuario.updateSaldo((valor - valorMedio)*qtd)
-                        await registro.deleteItem()
-                        return { mensagem: "Venda efetuada com Sucesso"}
-                    }
-                    catch{
-                        throw new Error("Venda nao efetuada")
-                    }
-                }
-                if(item.qtd > qtd){
-                    let newItem  =  new CarteiraController(id,acao.id,qtd,valor,"venda",item)
-                    try{
-                        await newItem.updateItem()
-                        await venda.addOpercao()
-                        await usuario.updateSaldo((valor - valorMedio) * qtd)
-                        return { mensagem: "Venda efetuada com Sucesso"}
-                    }
-                    catch{
-                        throw new Error("Venda nao efetuada")
-                    }
-                }
-                else{
-                    return {mensagem : "Venda nao efetuada"}
-                }
-            }
-            else{
-                return {mensagem : "Venda nao efetuada"}
-            }
-            
-        },*/
 
         addCompra: async (_, { nomeAcao , qtd , valor , saldo , data } , {validate}) => {
             const { id , keyAlphaVantage } = validate()

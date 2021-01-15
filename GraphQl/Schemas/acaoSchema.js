@@ -21,13 +21,9 @@ module.exports = gql`
         dateJson: String
 
     }
-    type Query {
-        acao( nome: String! ): Acao
-        acoes: [Acao]
-    }
     type Mutation {
-        createAcao(nome: String!): Acao
-        deleteAcao(nome: String!): Acao
+        acao( nome: String! ): Acao
+        acoes( nomes: String ): [Acao]
     }
 `
 
