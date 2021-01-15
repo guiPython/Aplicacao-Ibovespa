@@ -82,8 +82,8 @@ class OperacaoController {
             keys.forEach( dataHistorico => {
                 if ( Date.parse(dataHistorico) >= data_compra ){
                     let registro = historico[i]["dados"]
-                    registro.valorMercado = (registro.valorMercado) 
-                    registro.valorCarteira = (registro.valorCarteira  + this.valor) / 2
+                    registro.valorMercado = (registro.valorMercado)
+                    registro.valorCarteira = ( registro.qtd * registro.valorCarteira  + this.valor * this.qtd) / (this.qtd + registro.qtd)
                     historico[i]["dados"].qtd += this.qtd 
                     historico[i]["dados"].valorMercado = registro.valorMercado
                     historico[i]["dados"].valorCarteira = registro.valorCarteira}
@@ -103,7 +103,7 @@ class OperacaoController {
                     dados:{
                         nome : acao.nome,
                         qtd: this.qtd + registro_carteira.qtd ,
-                        valorCarteira : (this.valor + ( historico[i][`${new Date(data_compra).toISOString().split("T")[0]}`].valorCarteira )),
+                        valorCarteira : (this.valor * this.qtd + historico[i]["dados"].qtd * historico[i]["dados"].valorCarteira ) / ( this.qtd +  historico[i]["dados"].qtd),
                         valorMercado : valorMercado
                     }
                 })
@@ -138,7 +138,7 @@ class OperacaoController {
                     dados:{
                         nome : acao.nome,
                         qtd: registro_carteira.qtd - this.qtd,
-                        valorCarteira : (this.valor + ( historico[i][`${new Date(data_compra).toISOString().split("T")[0]}`].valorCarteira )),
+                        valorCarteira : (this.valor * this.valor + historico[i]["dados"].qtd * historico[i]["dados"].valorCarteira ) / ( this.qtd +  historico[i]["dados"].qtd),
                         valorMercado : valorMercado
                     }
                 })
