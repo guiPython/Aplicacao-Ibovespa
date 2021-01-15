@@ -66,7 +66,7 @@ Os parametros são todos obrigatorios , porem os dados que voce quer receber sã
     
     {acoes(nomes: "petr4,prio3,itub4"){nome,empresa,preco}} > Retorna nome, empresa e preco dos papeis , petr4 , prio3 e itub4
     
-Até agora vimos mutations e querys para o consumo mais basico de dados , como dito anteriormente um usuario pode criar , manipular e consumir sua carteira
+Até agora vimos mutations e querys para o consumo mais basico de dados , como dito anteriormente um usuario pode criar , manipular e consumir sua carteira,
 existem mutations para compras , vendas e atualização de saldo juntamente com uma query da carteira que vou apresentar abaixo:
 
    Exemplos:
