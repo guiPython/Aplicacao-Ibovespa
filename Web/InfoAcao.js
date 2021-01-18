@@ -113,7 +113,7 @@ async function teste_GetTimeSerieJSON( nomeAcao ){
     const info = await acao.getTimeSeriesJSON();
     console.log(info)
 }
-["prio3","petr4","aapl34","meli34"].forEach(x => {teste_GetStaticInfo(x)})
+//["prio3","petr4","aapl34","meli34"].forEach(x => {teste_GetStaticInfo(x)})
 
 
 module.exports = InfoAcao

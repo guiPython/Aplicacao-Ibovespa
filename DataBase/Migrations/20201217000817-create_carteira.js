@@ -52,7 +52,7 @@ module.exports = {
       },
 
     updatedAt: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
       }
 
     }

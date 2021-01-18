@@ -5,6 +5,6 @@ module.exports = {
     dialect: "sqlite",
     storage: "DataBase.sqlite3",
     define:{
-        timestramps: true,
+        timezone: "America/Sao_Paulo",
     }
 }

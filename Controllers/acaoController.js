@@ -110,7 +110,7 @@
       }
 
       async updateAcao(){
-         let data = await AcaoDataBase.findOne({where:{nome: this._nomeAcao }})
+         var data = await AcaoDataBase.findOne({where:{nome: this._nomeAcao }})
          try{
             this.updatePrice(data)
             this.updateInfo(data)

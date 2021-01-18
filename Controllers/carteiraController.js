@@ -90,7 +90,53 @@ class CarteiraController {
         
     }
 
+    async updateHistory(){
 
+        let registro_carteira = await CarteiraDataBase.findOne({where:{idUsuario: this.idUsuario, idAcao: this.idAcao}})
+        let dateAt = Date.parse(new Date(Date.now()).toISOString().split("T")[0] + " 18:00:00")
+        let updatedAt = Date.parse(registro_carteira.updatedAt)
+        let valorMercado = null
+        let registro_acao = await new AcaoController(null,null,this.idAcao).getAcaoByPk()
+        let historico = registro_carteira.historico
+        var i = 0
+        if (  updatedAt <= dateAt ){
+            let lastDateAt = Date.parse(historico[historico.length - 1].data)
+            while ( lastDateAt < dateAt) {
+            try{
+                valorMercado = registro_acao.timeSeries[`${new Date(lastDateAt).toISOString().split("T")[0]}`]["4. close"] 
+            }
+            catch{
+                valorMercado = historico[i-1]["dados"].valorMercado
+            }
+                historico.push(
+                    {
+                        data:new Date(lastDateAt).toISOString().split("T")[0],
+                        dados:{
+                            qtd: historico[i].dados.qtd,
+                            valorMercado:valorMercado,
+                            valorCarteira: historico[i].dados.valorCarteira
+                        }
+                    })
+                lastDateAt += 24 * 60 * 60 * 1000 ; i++
+            }
+
+            await CarteiraDataBase.update(
+            {
+                historico: historico
+            },
+            {
+                where:{
+                    idUsuario: this.idUsuario,
+                    idAcao: this.idAcao
+                }
+            })
+
+            return historico
+        }  
+        else{
+            return registro_carteira.historico
+        }
+    }
 
     async deleteItem(){
         await CarteiraDataBase.destroy({where:{idUsuario:this.idUsuario,idAcao:this.idAcao}})
