@@ -3,9 +3,9 @@ const AcaoController = require("../../Controllers/acaoController")
 
 const resolver = {
 
-    Query:{
-        Carteira: async (_,__,{validate}) => {
-            const { id , keyAlphaVantage } = validate()
+    Query: {
+        Carteira: async (_, __, { validate }) => {
+            const { id, keyAlphaVantage } = validate()
 
             const carteira = new CarteiraController(id)
             var registros = await carteira.getCarteira()
@@ -18,12 +18,13 @@ const resolver = {
                 updatedAt: i.updatedAt
             }))
 
+
             async function loop(registros) {
-                let info = [] ;
-                for (let i = 0; i < registros.length ; i++) {
-                    let registro_acao = new AcaoController(null,null,registros[i].idAcao)
+                let info = [];
+                for (let i = 0; i < registros.length; i++) {
+                    let registro_acao = new AcaoController(null, null, registros[i].idAcao)
                     let acao = await registro_acao.getAcaoByPk()
-                    registro_acao._nomeAcao = acao.nome ; registro_acao.keyAlphaVantage = keyAlphaVantage
+                    registro_acao._nomeAcao = acao.nome; registro_acao.keyAlphaVantage = keyAlphaVantage
                     await registro_acao.updateAcao()
                     acao = await registro_acao.getAcaoByName()
                     carteira.idAcao = registros[i].idAcao
@@ -46,7 +47,7 @@ const resolver = {
                 }
                 return info
             }
-            
+
             return await loop(registros)
 
         }

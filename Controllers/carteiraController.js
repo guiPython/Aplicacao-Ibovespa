@@ -102,9 +102,8 @@ class CarteiraController {
         let registro_acao = await new AcaoController(null, null, this.idAcao).getAcaoByPk()
         let historico = registro_carteira.historico
         var i = 0
-        if (updatedAt <= dateAt) {
-            let lastDateAt = Date.parse(historico[historico.length - 1].data)
-            console.log(lastDateAt)
+        if (updatedAt < dateAt) {
+            let lastDateAt = Date.parse(historico.pop().data)
             while (lastDateAt <= dateAt) {
                 try {
                     valorMercado = registro_acao.timeSeries[`${new Date(lastDateAt).toISOString().split("T")[0]}`]["4. close"]
